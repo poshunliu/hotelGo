@@ -11,12 +11,12 @@ import java.awt.*;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
-@Table(name="Hotel")
+@Table(name="hotels")
 public class Hotel {
 
     @Id
-    @GeneratedValue(strategy = SEQUENCE, generator = "hotel_id_seq")
-    @SequenceGenerator(name = "hotel_id_seq", sequenceName = "hotel_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = SEQUENCE, generator = "hotels_id_seq")
+    @SequenceGenerator(name = "hotels_id_seq", sequenceName = "hotels_id_seq", allocationSize = 1)
     private long Id;
 
 
