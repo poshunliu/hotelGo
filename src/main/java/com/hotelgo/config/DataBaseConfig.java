@@ -21,7 +21,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "com.hotelgo.config")
+@EnableJpaRepositories(basePackages = "com.hotelgo.repository")
 public class DataBaseConfig {
     public final Logger logger = LoggerFactory.getLogger(getClass());
 
