@@ -12,14 +12,12 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 
 @Configuration
-@ComponentScan(basePackages = "com.hotelgo.config",
+@ComponentScan(basePackages = "com.hotelgo",
         excludeFilters = @ComponentScan.Filter(type=FilterType.REGEX,pattern="io.ascending.training.api.*"))
-
 public class AppConfig {
     @Autowired
     private Environment environment;
     public final Logger logger = LoggerFactory.getLogger(getClass());
-
 
     @Bean(name = "applicationProperties")
     public PropertiesFactoryBean getDbProperties() {

@@ -22,6 +22,10 @@ public class Room implements Serializable {
     @Column (name ="room_type")
     private String roomType;
 
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "room_id")
+//    private Room rooms;
+
 
     public long getId() {
         return Id;
@@ -32,7 +36,11 @@ public class Room implements Serializable {
         return roomType;
     }
 
+
     public void setRoomType(String roomType) {
         this.roomType = roomType;
     }
+
+
+
 }

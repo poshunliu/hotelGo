@@ -1,13 +1,9 @@
 package com.hotelgo.domain;
 
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.Instant;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -32,6 +28,8 @@ public class User implements Serializable {
     @Column(unique = true)
     @NotNull
     private String email;
+
+    public User(){};
 
 
 //

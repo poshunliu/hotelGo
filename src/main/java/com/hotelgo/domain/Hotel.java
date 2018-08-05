@@ -1,12 +1,8 @@
 package com.hotelgo.domain;
 
 
-import com.sun.prism.Image;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
-import java.awt.*;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -36,6 +32,14 @@ public class Hotel {
     @Column(unique = true)
     @NotNull
     private String contact_phone;
+
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "car",cascade = CascadeType.ALL)
+//    //@JsonView({JsView.Admin.class})
+//    private List<Room> rooms;
+//
+
+
+
 
 /*
     @Column (name = "true")

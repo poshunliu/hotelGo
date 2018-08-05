@@ -1,6 +1,7 @@
 package com.hotelgo.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.flywaydb.core.Flyway;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -92,5 +93,13 @@ public class DataBaseConfig {
         factoryBean.setJpaProperties(props);
 
         return factoryBean;
+
+
+//        public Flyway flyway
+
     }
+
+
+
+
 }
