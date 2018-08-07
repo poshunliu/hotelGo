@@ -8,4 +8,6 @@ create table hotels (
     contact_phone varchar (225),
     star_level varchar (225),
     primary key (id)
+
+
 )

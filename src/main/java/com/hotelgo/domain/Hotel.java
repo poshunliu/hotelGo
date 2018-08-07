@@ -4,6 +4,8 @@ package com.hotelgo.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import java.util.List;
+
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
@@ -33,18 +35,22 @@ public class Hotel {
     @NotNull
     private String contact_phone;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "car",cascade = CascadeType.ALL)
-//    //@JsonView({JsView.Admin.class})
-//    private List<Room> rooms;
-//
+    @Column(name = "star_level" )
+    private String star_level;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hotel",cascade = CascadeType.ALL)
+    private List<Room> rooms;
 
 
 
 
-/*
-    @Column (name = "true")
-    private String star_level;*/
+    public List<Room> getRooms() {
+        return rooms;
+    }
 
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
+    }
 
     public long getId() {
         return Id;
@@ -54,6 +60,9 @@ public class Hotel {
         return state;
     }
 
+    public void setState(String state) {
+        this.state = state;
+    }
 
     public String getEmail() {
         return email;
@@ -77,6 +86,15 @@ public class Hotel {
 
     public void setContact_phone(String contact_phone) {
         this.contact_phone = contact_phone;
+    }
+
+
+    public String getStar_level() {
+        return star_level;
+    }
+
+    public void setStar_level(String star_level) {
+        this.star_level = star_level;
     }
 }
 

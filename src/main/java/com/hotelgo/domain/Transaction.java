@@ -3,6 +3,8 @@ package com.hotelgo.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import java.util.List;
+
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
@@ -21,9 +23,9 @@ public class Transaction {
     private int tranNo;
 
 
-    @Column(name="user_id")
-    @NotNull
-    private String userId;
+//    @Column(name="user_id")
+//    @NotNull
+//    private String userId;
 
 
     @Column(name = "start_date")
@@ -41,6 +43,13 @@ public class Transaction {
     @Column(name = "payment_type")
     private String paymentType;
 
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
     public Long getId() {
         return id;
     }
@@ -53,13 +62,13 @@ public class Transaction {
         this.tranNo = tranNo;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+//    public String getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(String userId) {
+//        this.userId = userId;
+//    }
 
     public String getStartDate() {
         return startDate;
@@ -91,5 +100,13 @@ public class Transaction {
 
     public void setPaymentType(String paymentType) {
         this.paymentType = paymentType;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -6,6 +6,7 @@ create table users (
     first_name varchar(255),
     last_name varchar(255) not NULL,
     email varchar(225),
+
     primary key (id)
 );
 

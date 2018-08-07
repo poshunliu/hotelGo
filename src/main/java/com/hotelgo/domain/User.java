@@ -4,6 +4,7 @@ package com.hotelgo.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -31,6 +32,8 @@ public class User implements Serializable {
 
     public User(){};
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Transaction> transactions;
 
 //
 //    @Column(name = "password")
@@ -108,11 +111,15 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
 
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
 
-
-
-//    public String getPassword() {
+    //    public String getPassword() {
 //        return password;
 //    }
 //

@@ -2,9 +2,12 @@ package com.hotelgo.domain;
 
 
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -22,9 +25,14 @@ public class Room implements Serializable {
     @Column (name ="room_type")
     private String roomType;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "room_id")
-//    private Room rooms;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hotel_id")
+    private Hotel hotel;
+
+
+
+
+
 
 
     public long getId() {
@@ -42,5 +50,11 @@ public class Room implements Serializable {
     }
 
 
+    public Hotel getHotel() {
+        return hotel;
+    }
 
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
 }
