@@ -32,8 +32,8 @@ public class UserService {
     }
 
 
-    public User findByName(String name){
-        Optional<User> option = userRepository.findByName(name);
+    public User findBy(String username){
+        Optional<User> option = userRepository.findByUserName(username);
         User user = option.get();
         return user;
     }

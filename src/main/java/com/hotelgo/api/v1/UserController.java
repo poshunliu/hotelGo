@@ -41,7 +41,7 @@ public class UserController {
 //    @RequestParam("getname")
     public User findByname(User user){
         logger.debug("get user by name");
-        userService.findByName(user.getUsername());
+        userService.findBy(user.getUsername());
         return user;
     }
 

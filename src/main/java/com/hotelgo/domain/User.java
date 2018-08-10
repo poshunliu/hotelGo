@@ -1,16 +1,21 @@
 package com.hotelgo.domain;
 
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 @Table(name="users")
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
 
     @Id
     @GeneratedValue(strategy=SEQUENCE, generator="users_id_seq")
@@ -35,52 +40,51 @@ public class User implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",cascade = CascadeType.ALL)
     private List<Transaction> transactions;
 
-//
-//    @Column(name = "password")
-//    private String password;
+    @Column(name = "password")
+    @NotNull
+    public String password;
+
+    @Column(name = "account_expired")
+    public Boolean accountExpire;
 
 
-//    @Column(name = "confirm_password")
-//    private String confirmPassword;
-//
-//
-//    @Column(name = "confirm_token")
-//    private String confirmToken;
-//
-//    @NotNull
-//    @CreationTimestamp
-//    @Column(name="create_at")
-//    private Instant createdAt = Instant.now();
-//
-//    @UpdateTimestamp
-//    @Column(name="update_at")
-//    private Instant updateAt;
-//
-//    @Column(name="last_login_at")
-//    private Instant lastLoginAt;
-//
-//
-//    @Column(name = "last_reset_at")
-//    private Instant lastResetAt;
-//
-//
-//    @Column(name = "confirm_at")
-//    private Instant confirmAt;
-//
-//    @NotNull
-//
-//    @Column(name = "confirm_status")
-//    private Integer confirmStatus;
-//
-//    @Column
-//    private String timezone;
 
     public Long getId() {
         return id;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return !accountExpire;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setUsername(String username) {
@@ -119,83 +123,15 @@ public class User implements Serializable {
         this.transactions = transactions;
     }
 
-    //    public String getPassword() {
-//        return password;
-//    }
-//
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
+    public Boolean getAccountExpire() {
+        return accountExpire;
+    }
 
-//    public String getConfirmPassword() {
-//        return confirmPassword;
-//    }
-//
-//    public void setConfirmPassword(String confirmPassword) {
-//        this.confirmPassword = confirmPassword;
-//    }
-//
-//    public String getConfirmToken() {
-//        return confirmToken;
-//    }
-//
-//    public void setConfirmToken(String confirmToken) {
-//        this.confirmToken = confirmToken;
-//    }
-//
-//    public Instant getCreatedAt() {
-//        return createdAt;
-//    }
-//
-//    public void setCreatedAt(Instant createdAt) {
-//        this.createdAt = createdAt;
-//    }
-//
-//    public Instant getUpdateAt() {
-//        return updateAt;
-//    }
-//
-//    public void setUpdateAt(Instant updateAt) {
-//        this.updateAt = updateAt;
-//    }
-//
-//    public Instant getLastLoginAt() {
-//        return lastLoginAt;
-//    }
-//
-//    public void setLastLoginAt(Instant lastLoginAt) {
-//        this.lastLoginAt = lastLoginAt;
-//    }
-//
-//    public Instant getLastResetAt() {
-//        return lastResetAt;
-//    }
-//
-//    public void setLastResetAt(Instant lastResetAt) {
-//        this.lastResetAt = lastResetAt;
-//    }
-//
-//    public Instant getConfirmAt() {
-//        return confirmAt;
-//    }
-//
-//    public void setConfirmAt(Instant confirmAt) {
-//        this.confirmAt = confirmAt;
-//    }
-//
-//    public Integer getConfirmStatus() {
-//        return confirmStatus;
-//    }
-//
-//    public void setConfirmStatus(Integer confirmStatus) {
-//        this.confirmStatus = confirmStatus;
-//    }
-//
-//    public String getTimezone() {
-//        return timezone;
-//    }
-//
-//    public void setTimezone(String timezone) {
-//        this.timezone = timezone;
-//    }
+    public void setAccountExpire(Boolean accountExpire) {
+        this.accountExpire = accountExpire;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
