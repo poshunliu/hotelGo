@@ -8,10 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.naming.Name;
 import java.util.List;
 
 @RestController
@@ -24,15 +23,36 @@ public class UserController {
     public UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
-//    @ResponseBody
+    @ResponseBody
     public List<User> getUserList() {
         logger.debug("list users");
         List<User> result = userService.findAll();
-//        List<User> result = Lists.newArrayList();;
         return result;
-
-
     }
+
+    @RequestMapping(value= "/{Id}",method = RequestMethod.GET)
+    @ResponseBody
+    public User findById(@PathVariable("Id") Long Id){
+        logger.debug("get user by id");
+        User result = userService.findById(Id);
+        return result;
+    }
+
+//    @RequestParam("getname")
+    public User findByname(User user){
+        logger.debug("get user by name");
+        userService.findByName(user.getUsername());
+        return user;
+    }
+
+
+
+
+
+
+
+
+
 
 
 
