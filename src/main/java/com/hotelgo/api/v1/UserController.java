@@ -38,11 +38,12 @@ public class UserController {
         return result;
     }
 
-//    @RequestParam("getname")
-    public User findByname(User user){
+
+    @RequestMapping(method = RequestMethod.GET)
+    public User findByname( @RequestParam("username") String username   ){
         logger.debug("get user by name");
-        userService.findBy(user.getUsername());
-        return user;
+        User result = userService.findBy(username);
+        return result;
     }
 
 
