@@ -18,7 +18,6 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.hotelgo.api")
-@Import({SwaggerConfig.class})
 public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

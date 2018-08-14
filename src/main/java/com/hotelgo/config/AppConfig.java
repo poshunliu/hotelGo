@@ -13,7 +13,7 @@ import org.springframework.core.io.ClassPathResource;
 
 @Configuration
 @ComponentScan(basePackages = "com.hotelgo",
-        excludeFilters = @ComponentScan.Filter(type=FilterType.REGEX,pattern="io.ascending.training.api.*"))
+        excludeFilters = @ComponentScan.Filter(type=FilterType.REGEX,pattern="com.hotelgo.api.*"))
 public class AppConfig {
     @Autowired
     private Environment environment;

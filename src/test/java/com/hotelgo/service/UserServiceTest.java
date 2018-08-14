@@ -1,8 +1,8 @@
-package com.hotelgo.repository;
-
+package com.hotelgo.service;
 
 import com.hotelgo.config.AppConfig;
 import com.hotelgo.domain.User;
+import com.hotelgo.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,43 +12,48 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+
 
 @WebAppConfiguration
 @ContextConfiguration(classes = {AppConfig.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("unit")
+public class UserServiceTest {
+    @Autowired
+    private UserService userService;
 
-public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
+    @PersistenceContext()
+    private EntityManager em;
+
     @Test
     @Transactional
-    public void saveTest(){
-
+    public void findByEmailTest(){
         User user = new User();
-        user.setUsername("Brandon");
+        user.setUsername("JJJJ");
         user.setEmail("brandontw617@gmail.com");
-
-
+        user.setFirstName("Liu");
         userRepository.save(user);
-        Optional<User> testUser = userRepository.findById(user.getId());
-        assertNotNull(testUser);
-        assertEquals(user.getId(), testUser.get().getId());
-
-
-
+        User expectedUser = userService.findByEmail(user.getEmail());
+        assertEquals(user.getEmail(),expectedUser.getEmail());
     }
 
 
+    public void findByUserName(){
+        User user = new User();
+        user.setUsername("AAA");
+        user.setEmail("nepia17@gmail.com");
+        user.setFirstName("Wu");
+        userRepository.save(user);
+        User expectedUser = userService.findBy(user.getUsername());
 
 
-
-
-
+    }
 
 
 }

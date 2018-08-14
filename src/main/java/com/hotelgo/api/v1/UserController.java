@@ -39,10 +39,18 @@ public class UserController {
     }
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET,params={"username"})
     public User findByname( @RequestParam("username") String username   ){
         logger.debug("get user by name");
         User result = userService.findBy(username);
+        return result;
+    }
+
+
+    @RequestMapping(method = RequestMethod.GET,params={"email"})
+    public User findByEmail(@RequestParam("email") String email){
+        logger.debug("get user by email");
+        User result = userService.findByEmail(email);
         return result;
     }
 
