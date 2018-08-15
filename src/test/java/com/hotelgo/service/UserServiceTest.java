@@ -54,10 +54,6 @@ public class UserServiceTest {
         user.setFirstName("Wu");
         userRepository.save(user);
         User expectedUser = userService.findBy(user.getUsername());
-
-
-
-
     }
 
 
@@ -72,7 +68,6 @@ public class UserServiceTest {
         userService.save(user);
         User expectedUser = userRepository.findByEmail(user.getEmail());
         assertEquals(user.getEmail(), expectedUser.getEmail());
-
     }
 
 

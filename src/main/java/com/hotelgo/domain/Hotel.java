@@ -17,6 +17,9 @@ public class Hotel {
     @SequenceGenerator(name = "hotels_id_seq", sequenceName = "hotels_id_seq", allocationSize = 1)
     private long Id;
 
+    @Column
+    private String hotelName;
+
 
     @Column(name = "city")
     private String city;
@@ -42,7 +45,13 @@ public class Hotel {
     private List<Room> rooms;
 
 
+    public String getHotelName() {
+        return hotelName;
+    }
 
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+    }
 
     public List<Room> getRooms() {
         return rooms;
