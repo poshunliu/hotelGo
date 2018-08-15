@@ -38,7 +38,10 @@ public class UserServiceTest {
         user.setUsername("JJJJ");
         user.setEmail("brandontw617@gmail.com");
         user.setFirstName("Liu");
-        userRepository.save(user);
+        user.setPassword("1234");
+        user.setLastName("lastname");
+        user.setAccountExpire(true);
+        userService.save(user);
         User expectedUser = userService.findByEmail(user.getEmail());
         assertEquals(user.getEmail(),expectedUser.getEmail());
     }
