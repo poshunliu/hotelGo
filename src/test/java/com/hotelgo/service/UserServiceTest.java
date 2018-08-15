@@ -56,7 +56,27 @@ public class UserServiceTest {
         User expectedUser = userService.findBy(user.getUsername());
 
 
+
+
     }
+
+
+    public void saveUser(){
+        User user = new User();
+        user.setUsername("POSHUN");
+        user.setEmail("brandontw617@gmail.com");
+        user.setFirstName("POSHUN");
+        user.setPassword("abcd");
+        user.setLastName("LIU");
+        user.setAccountExpire(true);
+        userService.save(user);
+        User expectedUser = userRepository.findByEmail(user.getEmail());
+        assertEquals(user.getEmail(), expectedUser.getEmail());
+
+    }
+
+
+
 
 
 }
