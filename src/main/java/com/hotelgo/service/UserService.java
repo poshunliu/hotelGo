@@ -40,9 +40,9 @@ public class UserService {
 
     @Transactional
     public User findByEmail(String email){
-        User option = userRepository.findByEmail(email);
-//        User user = option.get();
-        return option;
+        Optional <User> option = userRepository.findByEmail(email);
+        User user = option.get();
+        return user;
     }
 
 

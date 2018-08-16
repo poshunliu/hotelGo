@@ -4,20 +4,22 @@ package com.hotelgo.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import java.io.Serializable;
 import java.util.List;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 @Table(name="hotels")
-public class Hotel {
+public class Hotel implements Serializable{
 
     @Id
     @GeneratedValue(strategy = SEQUENCE, generator = "hotels_id_seq")
     @SequenceGenerator(name = "hotels_id_seq", sequenceName = "hotels_id_seq", allocationSize = 1)
     private long Id;
 
-    @Column
+    @Column(unique = true)
+    @NotNull
     private String hotelName;
 
 
@@ -45,13 +47,7 @@ public class Hotel {
     private List<Room> rooms;
 
 
-    public String getHotelName() {
-        return hotelName;
-    }
 
-    public void setHotelName(String hotelName) {
-        this.hotelName = hotelName;
-    }
 
     public List<Room> getRooms() {
         return rooms;
@@ -104,6 +100,15 @@ public class Hotel {
 
     public void setStar_level(String star_level) {
         this.star_level = star_level;
+    }
+
+
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
     }
 }
 

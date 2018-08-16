@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
 
 
@@ -66,8 +68,8 @@ public class UserServiceTest {
         user.setLastName("LIU");
         user.setAccountExpire(true);
         userService.save(user);
-        User expectedUser = userRepository.findByEmail(user.getEmail());
-        assertEquals(user.getEmail(), expectedUser.getEmail());
+        Optional <User> expectedUser = userRepository.findByEmail(user.getEmail());
+        assertEquals(user.getEmail(), expectedUser.get());
     }
 
 
