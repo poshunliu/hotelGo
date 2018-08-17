@@ -5,6 +5,7 @@ import com.hotelgo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -35,6 +36,7 @@ public class UserController {
 
 
     @RequestMapping(method = RequestMethod.GET,params={"username"})
+    @ResponseBody
     public User findByname( @RequestParam("username") String username   ){
         logger.debug("get user by name");
         User result = userService.findBy(username);
@@ -43,6 +45,7 @@ public class UserController {
 
 
     @RequestMapping(method = RequestMethod.GET,params={"email"})
+    @ResponseBody
     public User findByEmail(@RequestParam("email") String email){
         logger.debug("get user by email");
         User result = userService.findByEmail(email);
@@ -50,9 +53,10 @@ public class UserController {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(name="/signup",method = RequestMethod.POST)
     @ResponseBody
-    public User saveUser(User user){
+    @ResponseStatus(HttpStatus.OK)
+    public User saveUser(@RequestBody User user){
         logger.debug("save the user");
         User result = userService.save(user);
         return result;

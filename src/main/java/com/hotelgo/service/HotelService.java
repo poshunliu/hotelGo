@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.hotelgo.domain.Hotel;
 import com.hotelgo.repository.HotelRepository;
 
+import jdk.nashorn.internal.runtime.regexp.joni.constants.OPCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +30,17 @@ public class HotelService {
         return hotel;
 
     }
+
+    @Transactional
+    public Hotel findById(long id){
+        Optional<Hotel> option = hotelRepository.findById(id);
+        Hotel hotel = option.get();
+        return hotel;
+
+
+    }
+
+
 
 
 

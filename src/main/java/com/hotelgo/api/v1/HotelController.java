@@ -8,11 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 @RestController
 @RequestMapping(value = {"/api/hotels","/api/hotel"},produces = MediaType.APPLICATION_JSON_VALUE)
 public class HotelController {
@@ -28,6 +25,13 @@ public class HotelController {
     public Hotel getHotelByName(String hotelName){
         logger.debug("get Hotel List");
         Hotel result = hotelService.findByName(hotelName);
+        return result;
+    }
+
+
+    public Hotel getHotelById(long id){
+        logger.debug("get the hotel by id");
+        Hotel result = hotelService.findById(id);
         return result;
     }
 

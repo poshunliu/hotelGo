@@ -63,6 +63,7 @@ public class User implements Serializable, UserDetails {
         return password;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
