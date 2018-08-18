@@ -1,6 +1,7 @@
 package com.hotelgo.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -37,15 +38,20 @@ public class User implements Serializable, UserDetails {
 
     public User(){};
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",cascade = CascadeType.ALL)
-    private List<Transaction> transactions;
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user",cascade = CascadeType.ALL)
+//    private List<Transaction> transactions;
 
     @Column(name = "password")
     @NotNull
     public String password;
 
     @Column(name = "account_expired")
-    public Boolean accountExpire;
+    @JsonIgnore
+    public Boolean accountExpire=Boolean.TRUE;
+
+
+    @Transient
+    private Collection<? extends GrantedAuthority> authorities;
 
 
 
@@ -56,6 +62,10 @@ public class User implements Serializable, UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
     }
 
     @Override
@@ -88,6 +98,8 @@ public class User implements Serializable, UserDetails {
         return true;
     }
 
+
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -116,13 +128,13 @@ public class User implements Serializable, UserDetails {
         this.email = email;
     }
 
-    public List<Transaction> getTransactions() {
-        return transactions;
-    }
+//    public List<Transaction> getTransactions() {
+//        return transactions;
+//    }
 
-    public void setTransactions(List<Transaction> transactions) {
-        this.transactions = transactions;
-    }
+//    public void setTransactions(List<Transaction> transactions) {
+//        this.transactions = transactions;
+//    }
 
     public Boolean getAccountExpire() {
         return accountExpire;
@@ -135,4 +147,6 @@ public class User implements Serializable, UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
+
+
 }

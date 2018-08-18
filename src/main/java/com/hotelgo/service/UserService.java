@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.hotelgo.domain.User;
 import com.hotelgo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +34,16 @@ public class UserService {
         User user = option.get();
         return user;
     }
+
+    @Transactional
+    public User register(User u){
+        String password =u.getPassword();
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String passwordEncoder = encoder.encode(password);
+        u.setPassword(passwordEncoder);
+        return userRepository.save(u);
+    }
+
     @Transactional
     public User save(User u){
         return userRepository.save(u);

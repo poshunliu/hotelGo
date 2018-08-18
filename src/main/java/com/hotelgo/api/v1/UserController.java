@@ -53,39 +53,26 @@ public class UserController {
     }
 
 
-    @RequestMapping(name="/signup",method = RequestMethod.POST)
+    @RequestMapping(value="/signup",method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public User saveUser(@RequestBody User user){
         logger.debug("save the user");
-        User result = userService.save(user);
+        User result = userService.register(user);
         return result;
     }
 
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean userlogin (@RequestParam("username")
+                           String username,
+                           @RequestParam("password")
+                           String password){
 
+        logger.info("current usernname "+username);
+        logger.info("current password "+password);
+        return Boolean.TRUE;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
 }
