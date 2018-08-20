@@ -50,8 +50,20 @@ public class User implements Serializable, UserDetails {
     public Boolean accountExpire=Boolean.TRUE;
 
 
+    @Column(name = "credential_expired")
+    @JsonIgnore
+    public Boolean credentialsexpired=Boolean.TRUE;
+
+    @Column(name="enabled")
+    @JsonIgnore
+    public Boolean enabled=Boolean.TRUE;
+
+
     @Transient
     private Collection<? extends GrantedAuthority> authorities;
+
+
+
 
 
 
