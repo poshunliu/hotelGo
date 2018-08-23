@@ -19,7 +19,16 @@ public class UserService {
 
     @Transactional
     public List<User> findAll(){
-        List<User> list = Lists.newArrayList(userRepository.findAll());
+
+        List<User> list = null;
+        list = Lists.newArrayList(userRepository.findAll());
+        try {
+            if(list == null) {throw new Exception("The User parameter cant be null");}
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
         return list;
     }
     @Transactional

@@ -32,7 +32,7 @@ public class SecurityConfig {
             auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
         }
 
-        //    @Autowired
+//            @Autowired
 //    public void configureGlobal(AuthenticationManagerBuilder auth)
 //            throws Exception {
 //        auth.inMemoryAuthentication().withUser("user1")
