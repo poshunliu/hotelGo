@@ -40,6 +40,7 @@ public class UserService {
     @Transactional
     public User findBy(String username){
         Optional<User> option = userRepository.findByUserName(username);
+        //
         User user = option.get();
         return user;
     }

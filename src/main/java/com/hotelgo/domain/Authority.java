@@ -1,6 +1,8 @@
 package com.hotelgo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -8,7 +10,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 @Table(name="authorities")
-public class Authority implements Serializable {
+public class Authority implements Serializable, GrantedAuthority {
 
     /**
      *
@@ -46,6 +48,7 @@ public class Authority implements Serializable {
     }
 
 
+    @Override
     public String getAuthority() {
         return authority;
     }
