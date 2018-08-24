@@ -49,7 +49,7 @@ public class UserServiceTest {
     }
 
 
-    public void findByUserName(){
+    public void findByUserName() throws Exception {
         User user = new User();
         user.setUsername("AAA");
         user.setEmail("nepia17@gmail.com");

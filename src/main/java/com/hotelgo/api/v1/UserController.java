@@ -37,7 +37,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET,params={"username"})
     @ResponseBody
-    public User findByname( @RequestParam("username") String username   ){
+    public User findByname( @RequestParam("username") String username   ) throws Exception {
         logger.debug("get user by name");
         User result = userService.findBy(username);
         return result;

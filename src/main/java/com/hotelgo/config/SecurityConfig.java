@@ -27,6 +27,7 @@ public class SecurityConfig {
         @Autowired
         private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
+        @Autowired
         public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
             PasswordEncoder encoder = new BCryptPasswordEncoder();
             auth.userDetailsService(userDetailsService).passwordEncoder(encoder);
@@ -55,10 +56,10 @@ public class SecurityConfig {
 
 
         protected void configure(HttpSecurity http) throws Exception {
-
             http.csrf().disable().authorizeRequests().antMatchers("/api/users/login", "/api/user/login", "/api/users/signup", "/login").permitAll()
                     .and()
-                    .authorizeRequests().antMatchers("/api/**").hasAnyRole("REGISTERED_USER", "ADMIN")
+                    .authorizeRequests().antMatchers("/api/**").authenticated()
+//                    .hasAnyRole("REGISTERED_USER", "ADMIN")
                     .and()
                     .exceptionHandling()
                        .authenticationEntryPoint(restAuthenticationEntryPoint)

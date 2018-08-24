@@ -38,11 +38,14 @@ public class UserService {
         return user;
     }
     @Transactional
-    public User findBy(String username){
+    public User findBy(String username) throws Exception {
         Optional<User> option = userRepository.findByUserName(username);
-        //
         User user = option.get();
-        return user;
+        if(option==null){
+            throw new Exception("can't find user by username: "+username);
+        }else {
+            return user;
+        }
     }
 
     @Transactional

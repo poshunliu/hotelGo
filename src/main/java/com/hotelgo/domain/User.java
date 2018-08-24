@@ -47,12 +47,12 @@ public class User implements Serializable, UserDetails {
 
     @Column(name = "account_expired")
     @JsonIgnore
-    public Boolean accountExpire=Boolean.TRUE;
+    public Boolean accountExpire=Boolean.FALSE;
 
 
     @Column(name = "credential_expired")
     @JsonIgnore
-    public Boolean credentialsexpired=Boolean.TRUE;
+    public Boolean credentialsexpired=Boolean.FALSE;
 
     @Column(name="enabled")
     @JsonIgnore
@@ -102,12 +102,12 @@ public class User implements Serializable, UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return !credentialsexpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
 

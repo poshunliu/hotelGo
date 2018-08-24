@@ -21,7 +21,7 @@ public class HotelController {
     public HotelService hotelService;
 
 
-    @Transactional
+
     public Hotel getHotelByName(String hotelName){
         logger.debug("get Hotel List");
         Hotel result = hotelService.findByName(hotelName);
