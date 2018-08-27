@@ -37,7 +37,12 @@ public class HotelService {
         Hotel hotel = option.get();
         return hotel;
 
+    }
 
+    @Transactional
+    public Hotel save(Hotel hotel){
+        hotelRepository.save(hotel);
+        return hotel;
     }
 
 

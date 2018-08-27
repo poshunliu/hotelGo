@@ -1,14 +1,27 @@
 package com.hotelgo.api.v1;
 
 import com.hotelgo.domain.User;
+import com.hotelgo.extend.security.JwtTokenUtil;
+import com.hotelgo.extend.security.RestAuthenticationEntryPoint;
 import com.hotelgo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mobile.device.Device;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import sun.plugin.liveconnect.SecurityContextHelper;
+
 import java.util.List;
+
+import static org.springframework.security.core.context.SecurityContextHolder.getContext;
 
 @RestController
 @RequestMapping(value = {"/api/users","/api/user"},produces = MediaType.APPLICATION_JSON_VALUE)
@@ -17,6 +30,12 @@ public class UserController {
 
     @Autowired
     public UserService userService;
+
+    @Autowired
+    public AuthenticationManager authenticationManager;
+
+    @Autowired
+    public JwtTokenUtil jwtTokenUtil;
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
@@ -65,14 +84,33 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Boolean userlogin (@RequestParam("username")
+    public String userlogin (@RequestParam("username")
                            String username,
                            @RequestParam("password")
-                           String password){
+                           String password, Device device){
 
         logger.info("current usernname "+username);
         logger.info("current password "+password);
-        return Boolean.TRUE;
+//        return Boolean.TRUE;
+
+        Authentication notFullyAuthenticated = new UsernamePasswordAuthenticationToken(username, password);
+        final Authentication authentication = authenticationManager.authenticate(notFullyAuthenticated);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        try {
+            final UserDetails userDetails = userService.findBy(username);
+            final String token = jwtTokenUtil.generateToken(userDetails, device);
+            return token;
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("");
+            return null;
+
+        }
+
 
     }
+
+
+
 }
