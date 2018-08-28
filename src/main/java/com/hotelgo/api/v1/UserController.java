@@ -84,21 +84,18 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public String userlogin (@RequestParam("username")
-                           String username,
-                           @RequestParam("password")
-                           String password, Device device){
+    public String userlogin (@RequestBody LoginInfo loginInfo, Device device){
 
-        logger.info("current usernname "+username);
-        logger.info("current password "+password);
+        logger.info("current usernname"+ loginInfo.getUsername());
+        logger.info("current password"+ loginInfo.getPassword());
 //        return Boolean.TRUE;
 
-        Authentication notFullyAuthenticated = new UsernamePasswordAuthenticationToken(username, password);
+        Authentication notFullyAuthenticated = new UsernamePasswordAuthenticationToken(loginInfo.getUsername(), loginInfo.getPassword());
         final Authentication authentication = authenticationManager.authenticate(notFullyAuthenticated);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         try {
-            final UserDetails userDetails = userService.findBy(username);
+            final UserDetails userDetails = userService.findBy(loginInfo.getUsername());
             final String token = jwtTokenUtil.generateToken(userDetails, device);
             return token;
         } catch (Exception e) {
