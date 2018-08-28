@@ -6,9 +6,8 @@ import com.hotelgo.repository.AuthorityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-
 import java.util.List;
+
 
 @Service
 public class AuthorityService {
@@ -19,14 +18,14 @@ public class AuthorityService {
 //        List<Authority> list = Lists.newArrayList(authorityRepository.findAll());
 //        return list;
 //    }
-
-
+//
+//
 //    public Authority findById(Long id){
 //        Optional<Authority> option = authorityRepository.findById(id);
 //        Authority authority = option.get();
 //        return authority;
-//
 //    }
+
     @Transactional
     public List<Authority> findByUserId(Long id) {
 
@@ -36,6 +35,8 @@ public class AuthorityService {
 
     }
     // add authority ---homework
+
+
 
 
 

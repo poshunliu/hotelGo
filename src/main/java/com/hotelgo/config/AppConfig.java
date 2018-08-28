@@ -26,8 +26,6 @@ public class AppConfig {
         logger.debug("applicationProperties is "+profile);
         bean.setLocation(new ClassPathResource("META-INF/env/application-"+profile+".properties"));
         return bean;
-
-
     }
 
     @Bean(name = "shareProperties")
@@ -36,13 +34,5 @@ public class AppConfig {
         bean.setLocation(new ClassPathResource("META-INF/share.properties"));
         return bean;
 
-
     }
-
-
-
-
-
-
-
 }
