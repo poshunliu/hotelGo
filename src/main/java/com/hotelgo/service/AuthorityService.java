@@ -38,11 +38,15 @@ public class AuthorityService {
 
     // add authority ---homework
 
-//    public Authority addAuthority(String useranme, ){
-//
-//        Authority authority = authorityRepository.save(User);
-//    }
-//
+    public Authority addAuthority(User user, Authority authority){
+
+
+        authority = authorityRepository.save(authority);
+        user.getAuthorities();
+        return  authority;
+
+    }
+
 
 
 
