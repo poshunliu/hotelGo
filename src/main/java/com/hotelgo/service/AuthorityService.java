@@ -2,6 +2,7 @@ package com.hotelgo.service;
 
 
 import com.hotelgo.domain.Authority;
+import com.hotelgo.domain.User;
 import com.hotelgo.repository.AuthorityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,8 +35,14 @@ public class AuthorityService {
         return authorities;
 
     }
+
     // add authority ---homework
 
+//    public Authority addAuthority(String useranme, ){
+//
+//        Authority authority = authorityRepository.save(User);
+//    }
+//
 
 
 

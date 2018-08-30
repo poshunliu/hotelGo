@@ -1,10 +1,12 @@
 package com.hotelgo.api.v1;
 
 import com.hotelgo.domain.Hotel;
+import com.hotelgo.repository.HotelRepository;
 import com.hotelgo.service.HotelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +38,17 @@ public class HotelController {
         logger.debug("get the hotel by id");
         Hotel result = hotelService.findById(id);
         return result;
+    }
+
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public Hotel save(@RequestBody Hotel hotel){
+
+        logger.debug("sign up new hotel");
+        Hotel result = hotelService.save(hotel);
+        return result;
+
     }
 
 

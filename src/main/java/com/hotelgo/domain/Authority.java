@@ -34,9 +34,9 @@ public class Authority implements Serializable, GrantedAuthority {
     public Authority(){}
 
 
-    public Authority(User user, String authority){
+    public Authority(User user, String role){
         this.user=user;
-        this.authority = authority;
+        this.authority = role;
     }
 
     public Long getId() {
