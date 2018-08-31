@@ -41,8 +41,8 @@ public class HotelService {
 
     @Transactional
     public Hotel save(Hotel hotel){
-        hotelRepository.save(hotel);
-        return hotel;
+        Hotel result = hotelRepository.save(hotel);
+        return result;
     }
 
 

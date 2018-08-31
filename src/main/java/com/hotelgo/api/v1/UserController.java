@@ -32,10 +32,13 @@ public class UserController {
     @Autowired
     public JwtTokenUtil jwtTokenUtil;
 
+
+
+
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<User> getUserList() {
-        logger.debug("list users");
+        logger.debug("list users.");
         List<User> result = userService.findAll();
         return result;
     }
@@ -43,25 +46,25 @@ public class UserController {
     @RequestMapping(value= "/{Id}",method = RequestMethod.GET)
     @ResponseBody
     public User findById(@PathVariable("Id") Long Id){
-        logger.debug("get user by id");
+        logger.debug("get user by id.");
         User result = userService.findById(Id);
         return result;
     }
 
 
-    @RequestMapping(method = RequestMethod.GET,params={"username"})
+    @RequestMapping(value = "name", method = RequestMethod.GET,params={"username"})
     @ResponseBody
     public User findByname( @RequestParam("username") String username   ) throws Exception {
-        logger.debug("get user by name");
+        logger.debug("get user by name.");
         User result = userService.findBy(username);
         return result;
     }
 
 
-    @RequestMapping(method = RequestMethod.GET,params={"email"})
+    @RequestMapping(value = "email", method = RequestMethod.GET,params={"email"})
     @ResponseBody
     public User findByEmail(@RequestParam("email") String email){
-        logger.debug("get user by email");
+        logger.debug("get user by email.");
         User result = userService.findByEmail(email);
         return result;
     }
@@ -71,7 +74,7 @@ public class UserController {
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public User saveUser(@RequestBody User user){
-        logger.debug("save the user");
+        logger.debug("save the user.");
         User result = userService.register(user);
         return result;
     }
@@ -79,28 +82,26 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public String userlogin (@RequestBody LoginInfo loginInfo, Device device){
+    public String userlogin (@RequestBody User user, Device device){
 
-        logger.info("current usernname"+ loginInfo.getUsername());
-        logger.info("current password"+ loginInfo.getPassword());
+        logger.info("current usernname"+ user.getUsername());
+        logger.info("current password"+ user.getPassword());
 //        return Boolean.TRUE;
 
-        Authentication notFullyAuthenticated = new UsernamePasswordAuthenticationToken(loginInfo.getUsername(), loginInfo.getPassword());
+
+        Authentication notFullyAuthenticated = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
         final Authentication authentication = authenticationManager.authenticate(notFullyAuthenticated);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         try {
-            final UserDetails userDetails = userService.findBy(loginInfo.getUsername());
+            final UserDetails userDetails = userService.findBy(user.getUsername());
             final String token = jwtTokenUtil.generateToken(userDetails, device);
             return token;
         } catch (Exception e) {
             e.printStackTrace();
-            logger.error("");
+            logger.error("login user.");
             return null;
-
         }
-
-
     }
 
 

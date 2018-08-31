@@ -38,8 +38,5 @@ public class HotelServiceTest {
         assertEquals(hotel.getHotelName(), expectedHotel.getHotelName());
 
 
-
-
     }
-
 }

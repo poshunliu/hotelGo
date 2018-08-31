@@ -21,7 +21,7 @@ public class HotelController {
 
 
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "name", method = RequestMethod.GET)
     @ResponseBody
     public Hotel getHotelByName(String hotelName){
         logger.debug("get Hotel List");
@@ -38,14 +38,15 @@ public class HotelController {
         return result;
     }
 
-    @RequestMapping( method = RequestMethod.POST)
+    @RequestMapping(value = "/signup",method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Hotel save(@RequestBody Hotel hotel){
 
         logger.debug("sign up new hotel");
-        Hotel result = hotelService.save(hotel);
-        return result;
+
+        Hotel result1 = hotelService.save(hotel);
+        return result1;
     }
 
 }

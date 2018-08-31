@@ -36,13 +36,15 @@ public class AuthorityService {
 
     }
 
-    // add authority ---homework
+
 
     public Authority addAuthority(User user, Authority authority){
 
 
+        authority.setUser(user);
         authority = authorityRepository.save(authority);
-        user.getAuthorities();
+
+
         return  authority;
 
     }
