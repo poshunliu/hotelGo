@@ -1,14 +1,7 @@
 package com.hotelgo.domain;
 
-
-
-import com.fasterxml.jackson.annotation.JsonView;
-
 import javax.persistence.*;
-
 import java.io.Serializable;
-import java.util.List;
-
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
@@ -33,8 +26,6 @@ public class Room implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "transaction_id")
     private Transaction transaction;
-
-
 
 
 

@@ -41,10 +41,14 @@ public class Hotel implements Serializable{
     private String contact_phone;
 
     @Column(name = "star_level" )
-    private String star_level;
+    private String starLevel;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "hotel",cascade = CascadeType.ALL)
     private List<Room> rooms;
+
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "hotel", cascade = CascadeType.ALL)
+    private List<Image> images;
 
 
 
@@ -94,14 +98,21 @@ public class Hotel implements Serializable{
     }
 
 
-    public String getStar_level() {
-        return star_level;
+    public String getStarLevel() {
+        return starLevel;
     }
 
-    public void setStar_level(String star_level) {
-        this.star_level = star_level;
+    public void setStarLevel(String starLevel) {
+        this.starLevel = starLevel;
     }
 
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
 
     public String getHotelName() {
         return hotelName;
