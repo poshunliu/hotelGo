@@ -22,14 +22,11 @@ public class Hotel implements Serializable{
     @NotNull
     private String hotelName;
 
-
     @Column(name = "city")
     private String city;
 
-
     @Column(name = "state")
     private String state;
-
 
     @Column(unique = true)
     @NotNull
@@ -121,6 +118,8 @@ public class Hotel implements Serializable{
     public void setHotelName(String hotelName) {
         this.hotelName = hotelName;
     }
+
+
 }
 
 

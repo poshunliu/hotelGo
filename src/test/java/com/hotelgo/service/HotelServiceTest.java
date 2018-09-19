@@ -31,7 +31,7 @@ public class HotelServiceTest {
         hotel.setCity("Tysons Corner");
         hotel.setContact_phone("123-456-7890");
         hotel.setEmail("Hyatt_tysons@gmail.com");
-        hotel.setStar_level("five");
+        hotel.setStarLevel("five");
         hotelService.save(hotel);
 
         Hotel expectedHotel = hotelService.findByName(hotel.getHotelName());
