@@ -2,7 +2,6 @@ package com.hotelgo.api.v1;
 
 import com.hotelgo.domain.Hotel;
 import com.hotelgo.domain.Room;
-import com.hotelgo.repository.HotelRepository;
 import com.hotelgo.repository.RoomRepository;
 import com.hotelgo.service.HotelService;
 import org.slf4j.Logger;
@@ -31,7 +30,6 @@ public class RoomController {
         logger.debug("sign up new hotel");
         room.setHotel(hotel);
         Room result = roomRepository.save(room);
-
         return result;
     }
 

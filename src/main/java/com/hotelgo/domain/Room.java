@@ -1,5 +1,7 @@
 package com.hotelgo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import static javax.persistence.GenerationType.SEQUENCE;
@@ -20,9 +22,8 @@ public class Room implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel_id")
+    @JsonIgnoreProperties(value = { "rooms","images" })
     private Hotel hotel;
-
-
 
 
     public long getId() {
