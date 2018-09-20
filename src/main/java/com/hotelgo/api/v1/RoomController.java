@@ -4,6 +4,7 @@ import com.hotelgo.domain.Hotel;
 import com.hotelgo.domain.Room;
 import com.hotelgo.repository.RoomRepository;
 import com.hotelgo.service.HotelService;
+import com.hotelgo.service.RoomSerivce;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class RoomController {
     public RoomRepository roomRepository;
     @Autowired
     public HotelService hotelService;
+    @Autowired
+    public RoomSerivce roomSerivce;
 
     @RequestMapping(value = "/hotel/{hotel_id}/room", method = RequestMethod.POST)
     @ResponseBody
@@ -33,15 +36,12 @@ public class RoomController {
         return result;
     }
 
-
-    @RequestMapping(value = "hotel", method = RequestMethod.GET)
+    @RequestMapping(value = "/hotel/{hotel_id}/room", method = RequestMethod.GET)
     @ResponseBody
-    public Room getRoombyHotel(String hotelName){
+    public Room getRoombyHotel(@PathVariable("id") String hotel_id){
 
         logger.debug("find room by hotel");
-         Room result = roomRepository.findRoomsByHotel(hotelName);
+         Room result = roomSerivce.findRoomsByHotel(hotel_id);
          return result;
-
-
     }
 }

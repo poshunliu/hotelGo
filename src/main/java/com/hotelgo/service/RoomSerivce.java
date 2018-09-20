@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class RoomSerivce {
 
@@ -15,5 +17,8 @@ public class RoomSerivce {
     public Room save(Room room){
         return roomRepository.save(room);
     }
-
+    @Transactional
+    public Room findRoomsByHotel(String hotel_id){
+        return roomRepository.findRoomsByHotel(hotel_id);
+    }
 }
