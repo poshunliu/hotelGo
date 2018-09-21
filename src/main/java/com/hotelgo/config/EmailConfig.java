@@ -1,11 +1,15 @@
-package com.hotelgo.config.viewresolver;
+package com.hotelgo.config;
 
+
+import com.hotelgo.mail.RegistrationEmail;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 
 import java.util.Properties;
-
+@Configuration
 public class EmailConfig {
 
     @Bean(name="mailSender")
@@ -23,12 +27,6 @@ public class EmailConfig {
         emailSender.setJavaMailProperties(mailProperties);
         return emailSender;
     }
-
-
-
-
-
-
     @Bean
     public FreeMarkerConfigurationFactoryBean getFreeMarkerMailConfiguration(){
         FreeMarkerConfigurationFactoryBean freeMarkerConfigurationFactoryBean = new FreeMarkerConfigurationFactoryBean();
@@ -36,6 +34,17 @@ public class EmailConfig {
         freeMarkerConfigurationFactoryBean.setPreferFileSystemAccess(false);
         return freeMarkerConfigurationFactoryBean;
     }
+    @Bean
+    public RegistrationEmail getRegistrationEmail(@Autowired JavaMailSenderImpl sender,
+                                                  @Autowired freemarker.template.Configuration configuration){
+        RegistrationEmail registrationEmail = new RegistrationEmail();
+        registrationEmail.setMailSender(sender);
+        registrationEmail.setConfiguration(configuration);
+        registrationEmail.setFreemarkerTemplate("RegistrationEmail.ftl");
+        return registrationEmail;
+    }
+
+
 
 
 }

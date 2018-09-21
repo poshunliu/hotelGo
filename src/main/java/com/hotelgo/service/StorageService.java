@@ -12,14 +12,9 @@ public class StorageService {
         private String bucket;
         private String bucketName = "hotelGo_dev";
 
-
         public StorageService(AmazonS3 s3){
             this.amazonS3 = s3;
         }
-
-
-
-
         public void upload(String keyName, File file){
 
             amazonS3.putObject(bucketName, keyName, file);
@@ -44,13 +39,5 @@ public class StorageService {
             }else{
                 return amazonS3.getObject(this.bucket,S3Key);
             }
-
         }
-
-
-//        public S3Object getObject(String bucket , String ){
-//
-//        }
-
-
 }

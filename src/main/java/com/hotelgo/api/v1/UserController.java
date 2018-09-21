@@ -52,7 +52,7 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "name", method = RequestMethod.GET,params={"username"})
+    @RequestMapping(value = "username", params = "username",method = RequestMethod.GET)
     @ResponseBody
     public User findByname( @RequestParam("username") String username   ) throws Exception {
         logger.debug("get user by name.");

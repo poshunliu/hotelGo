@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = {"/api","/api"},produces = MediaType.APPLICATION_JSON_VALUE)
 public class RoomController {
@@ -38,10 +40,10 @@ public class RoomController {
 
     @RequestMapping(value = "/hotel/{hotel_id}/room", method = RequestMethod.GET)
     @ResponseBody
-    public Room getRoombyHotel(@PathVariable("id") String hotel_id){
+    public List<Room> getRoombyHotel(@PathVariable("hotel_id") Long id){
 
         logger.debug("find room by hotel");
-         Room result = roomSerivce.findRoomsByHotel(hotel_id);
-         return result;
+        List<Room> result = roomSerivce.findRoomsByHotel(id);
+        return result;
     }
 }

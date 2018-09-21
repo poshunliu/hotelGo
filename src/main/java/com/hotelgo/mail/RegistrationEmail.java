@@ -1,7 +1,6 @@
 package com.hotelgo.mail;
 
 import com.hotelgo.domain.User;
-
 import java.io.Serializable;
 import java.util.Map;
 
