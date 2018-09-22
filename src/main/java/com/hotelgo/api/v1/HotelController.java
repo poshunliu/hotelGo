@@ -24,8 +24,6 @@ public class HotelController {
     @Autowired
     public StorageService storageService;
 
-
-
     @RequestMapping(value = "name", method = RequestMethod.GET)
     @ResponseBody
     public Hotel getHotelByName(String hotelName){
@@ -33,7 +31,6 @@ public class HotelController {
         Hotel result = hotelService.findByName(hotelName);
         return result;
     }
-
 
     @RequestMapping(value= "/{Id}",method = RequestMethod.GET)
     @ResponseBody
@@ -43,20 +40,15 @@ public class HotelController {
         return result;
     }
 
-
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public Hotel save(@RequestBody Hotel hotel){
-
-
         logger.debug("sign up new hotel");
         Hotel result1 = hotelService.save(hotel);
-
         return result1;
 
     }
-
 
     @RequestMapping(value = "/{Id}/image", method = RequestMethod.POST)
     @ResponseBody
