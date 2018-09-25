@@ -40,7 +40,7 @@ public class RoomController {
 
     @RequestMapping(value = "/hotel/{hotel_id}/room", method = RequestMethod.GET)
     @ResponseBody
-    public List<Room> getRoombyHotel(@PathVariable("hotel_id") Long id){
+    public List<Room> getRoomByHotel(@PathVariable("hotel_id") Long id){
 
         logger.debug("find room by hotel");
         List<Room> result = roomSerivce.findRoomsByHotel(id);

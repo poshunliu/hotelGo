@@ -1,19 +1,19 @@
 package com.hotelgo.api.v1;
 
 import com.hotelgo.domain.Hotel;
+import com.hotelgo.domain.Image;
 import com.hotelgo.service.HotelService;
+import com.hotelgo.service.ImageService;
 import com.hotelgo.service.StorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.File;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping(value = {"/api/hotels","/api/hotel"},produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = {"/api/hotels","/api/hotel"})
 public class HotelController {
 
 
@@ -23,6 +23,8 @@ public class HotelController {
     public HotelService hotelService;
     @Autowired
     public StorageService storageService;
+    @Autowired
+    public ImageService imageService;
 
     @RequestMapping(value = "name", method = RequestMethod.GET)
     @ResponseBody
@@ -47,17 +49,14 @@ public class HotelController {
         logger.debug("sign up new hotel");
         Hotel result1 = hotelService.save(hotel);
         return result1;
-
     }
 
-    @RequestMapping(value = "/{Id}/image", method = RequestMethod.POST)
+    @RequestMapping(value = "/{Id}/image", method = RequestMethod.POST, consumes = {"multipart/form-data"})
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public String upLoadHotelImage(@PathVariable("Id") Long Id, File image){
+    public Image upLoadHotelImage(@PathVariable("Id") Long hotelId, @RequestParam(value="file") MultipartFile multipartFile) {
 
-        storageService.upload("Brandon.image", image);
-        String result = storageService.getObjectUrl("Brandon.image");
-        return result;
+        Image upload = imageService.uploadHotelImage(hotelId, multipartFile);
+        return upload;
     }
-
 }
