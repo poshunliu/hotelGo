@@ -40,7 +40,7 @@ public class UserController extends BaseController{
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<User> getUserList() {
-        setJsonViewClass(JsView.Other.class);
+        setJsonViewClass(JsView.User.class);
         disableMapperFeature_DEFAULT_VIEW_INCLUSION();
         logger.debug("list users.");
         List<User> result = userService.findAll();
