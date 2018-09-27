@@ -4,7 +4,6 @@ import com.hotelgo.domain.JsView;
 import com.hotelgo.domain.User;
 import com.hotelgo.extend.security.JwtTokenUtil;
 import com.hotelgo.service.UserService;
-import org.apache.commons.dbcp.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,24 +49,30 @@ public class UserController extends BaseController{
     @RequestMapping(value= "/{Id}",method = RequestMethod.GET)
     @ResponseBody
     public User findById(@PathVariable("Id") Long Id){
+        setJsonViewClass(JsView.User.class);
+        disableMapperFeature_DEFAULT_VIEW_INCLUSION();
         logger.debug("get user by id.");
         User result = userService.findById(Id);
         return result;
     }
 
 
-    @RequestMapping(params = "username",method = RequestMethod.GET)
+    @RequestMapping(value= "/name",params = "username",method = RequestMethod.GET)
     @ResponseBody
-    public User findByname( @RequestParam("username") String username) throws Exception {
+    public User findByName( @RequestParam("username") String username) throws Exception {
+        setJsonViewClass(JsView.User.class);
+        disableMapperFeature_DEFAULT_VIEW_INCLUSION();
         logger.debug("get user by name.");
-        User result = userService.findBy(username);
+        User result = userService.findByName(username);
         return result;
     }
 
 
-    @RequestMapping(method = RequestMethod.GET,params={"email"})
+    @RequestMapping(value= "/email",params = "email", method = RequestMethod.GET)
     @ResponseBody
     public User findByEmail(@RequestParam("email") String email){
+        setJsonViewClass(JsView.User.class);
+        disableMapperFeature_DEFAULT_VIEW_INCLUSION();
         logger.debug("get user by email.");
         User result = userService.findByEmail(email);
         return result;
@@ -98,7 +103,7 @@ public class UserController extends BaseController{
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         try {
-            final UserDetails userDetails = userService.findBy(user.getUsername());
+            final UserDetails userDetails = userService.findByName(user.getUsername());
             final String token = jwtTokenUtil.generateToken(userDetails, device);
             return token;
         } catch (Exception e) {

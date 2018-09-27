@@ -55,7 +55,7 @@ public class UserServiceTest {
         user.setEmail("nepia17@gmail.com");
         user.setFirstName("Wu");
         userRepository.save(user);
-        User expectedUser = userService.findBy(user.getUsername());
+        User expectedUser = userService.findByName(user.getUsername());
     }
 
 

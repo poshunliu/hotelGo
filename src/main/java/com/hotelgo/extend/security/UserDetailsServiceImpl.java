@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         User user = null;
         try {
-            user = userService.findBy(username);
+            user = userService.findByName(username);
         } catch (Exception e) {
             Logger logger = LoggerFactory.getLogger(getClass());
             logger.error("user doesn't exist .....",e);
