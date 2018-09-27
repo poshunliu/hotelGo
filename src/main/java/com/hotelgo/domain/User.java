@@ -1,7 +1,9 @@
 package com.hotelgo.domain;
 
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
@@ -20,16 +22,20 @@ public class User implements Serializable, UserDetails {
     private Long id;
 
     @Column(unique = true)
+    @JsonView({JsView.Other.class})
     private String username;
 
     @Column(name = "first_name")
+    @JsonView({JsView.Other.class})
     private String firstName;
 
     @Column(name = "last_name")
+    @JsonView({JsView.Other.class})
     private String lastName;
 
     @Column(unique = true)
     @NotNull
+    @JsonView({JsView.User.class})
     private String email;
 
     public User(){};
@@ -39,6 +45,7 @@ public class User implements Serializable, UserDetails {
 
     @Column(name = "password")
     @NotNull
+    @JsonView({JsView.Admin.class})
     public String password;
 
     @Column(name = "account_expired")

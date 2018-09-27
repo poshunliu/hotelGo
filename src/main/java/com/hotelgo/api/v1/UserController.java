@@ -1,8 +1,10 @@
 package com.hotelgo.api.v1;
 
+import com.hotelgo.domain.JsView;
 import com.hotelgo.domain.User;
 import com.hotelgo.extend.security.JwtTokenUtil;
 import com.hotelgo.service.UserService;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = {"/api/users","/api/user"},produces = MediaType.APPLICATION_JSON_VALUE)
-public class UserController {
+public class UserController extends BaseController{
     public final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -38,6 +40,8 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<User> getUserList() {
+        setJsonViewClass(JsView.Other.class);
+        disableMapperFeature_DEFAULT_VIEW_INCLUSION();
         logger.debug("list users.");
         List<User> result = userService.findAll();
         return result;
@@ -52,16 +56,16 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "username", params = "username",method = RequestMethod.GET)
+    @RequestMapping(params = "username",method = RequestMethod.GET)
     @ResponseBody
-    public User findByname( @RequestParam("username") String username   ) throws Exception {
+    public User findByname( @RequestParam("username") String username) throws Exception {
         logger.debug("get user by name.");
         User result = userService.findBy(username);
         return result;
     }
 
 
-    @RequestMapping(value = "email", method = RequestMethod.GET,params={"email"})
+    @RequestMapping(method = RequestMethod.GET,params={"email"})
     @ResponseBody
     public User findByEmail(@RequestParam("email") String email){
         logger.debug("get user by email.");
