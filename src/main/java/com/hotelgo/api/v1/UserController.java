@@ -4,6 +4,7 @@ import com.hotelgo.domain.JsView;
 import com.hotelgo.domain.User;
 import com.hotelgo.extend.security.JwtTokenUtil;
 import com.hotelgo.extend.security.RestAuthenticationRequest;
+import com.hotelgo.extend.security.RestAuthenticationToken;
 import com.hotelgo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +17,14 @@ import org.springframework.mobile.device.Device;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import sun.tools.jstat.Token;
 
 import javax.xml.ws.Response;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -40,7 +44,7 @@ public class UserController extends BaseController{
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public List<User> getUserList() {
-        setJsonViewClass(JsView.User.class);
+        setJsonViewClass(JsView.Other.class);
         disableMapperFeature_DEFAULT_VIEW_INCLUSION();
         logger.debug("list users.");
         List<User> result = userService.findAll();
@@ -88,20 +92,35 @@ public class UserController extends BaseController{
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public String userLogin (@RequestBody RestAuthenticationRequest restAuthenticationRequest, Device device){
+    public ResponseEntity userLogin (@RequestBody RestAuthenticationRequest restAuthenticationRequest, Device device){
         logger.info("current usernname"+ restAuthenticationRequest.getUsername());
         logger.info("current password"+ restAuthenticationRequest.getPassword());
         Authentication notFullyAuthenticated = new UsernamePasswordAuthenticationToken(restAuthenticationRequest.getUsername(), restAuthenticationRequest.getPassword());
-        final Authentication authentication = authenticationManager.authenticate(notFullyAuthenticated);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
         try {
-            final UserDetails userDetails = userService.findByName(restAuthenticationRequest.getUsername());
-            final String token = jwtTokenUtil.generateToken(userDetails, device);
-            return token;
-        } catch (Exception e) {
-            logger.error("Login reject.",e);
-            return null;
+            final Authentication authentication = authenticationManager.authenticate(notFullyAuthenticated);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            try {
+                RestAuthenticationToken restAuthenticationToken = new RestAuthenticationToken();
+                final UserDetails userDetails = userService.findByName(restAuthenticationRequest.getUsername());
+                final String token = jwtTokenUtil.generateToken(userDetails, device);
+                restAuthenticationToken.setToken(token);
+//            HashMap<String, String> map = new HashMap<>();
+//            map.put("token",token);
+                return ResponseEntity.ok(restAuthenticationToken);
+            } catch (Exception e) {
+                logger.error("Login reject.",e);
+                return null;
+            }
+
+        }catch (AuthenticationException ex){
+
+            logger.error("authentication Error");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Username/Password is incorrect, Please try again ");
         }
+
+
+
+
     }
 
 
