@@ -45,7 +45,7 @@ public class User implements Serializable, UserDetails {
 
     @Column(name = "password")
     @NotNull
-    @JsonView({JsView.Admin.class})
+    @JsonIgnore
     public String password;
 
     @Column(name = "account_expired")
@@ -60,7 +60,6 @@ public class User implements Serializable, UserDetails {
     @Column(name="enabled")
     @JsonIgnore
     public Boolean enabled=Boolean.TRUE;
-
 
     @Transient
     private Collection<? extends GrantedAuthority> authorities;

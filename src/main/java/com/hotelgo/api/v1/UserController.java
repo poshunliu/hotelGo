@@ -3,12 +3,15 @@ package com.hotelgo.api.v1;
 import com.hotelgo.domain.JsView;
 import com.hotelgo.domain.User;
 import com.hotelgo.extend.security.JwtTokenUtil;
+import com.hotelgo.extend.security.RestAuthenticationRequest;
 import com.hotelgo.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +19,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import javax.xml.ws.Response;
 import java.util.List;
 
 
@@ -26,14 +31,10 @@ public class UserController extends BaseController{
 
     @Autowired
     public UserService userService;
-
     @Autowired
     public AuthenticationManager authenticationManager;
-
     @Autowired
     public JwtTokenUtil jwtTokenUtil;
-
-
 
 
     @RequestMapping(method = RequestMethod.GET)
@@ -56,8 +57,7 @@ public class UserController extends BaseController{
         return result;
     }
 
-
-    @RequestMapping(value= "/name",params = "username",method = RequestMethod.GET)
+    @RequestMapping(params = "username",method = RequestMethod.GET)
     @ResponseBody
     public User findByName( @RequestParam("username") String username) throws Exception {
         setJsonViewClass(JsView.User.class);
@@ -67,8 +67,7 @@ public class UserController extends BaseController{
         return result;
     }
 
-
-    @RequestMapping(value= "/email",params = "email", method = RequestMethod.GET)
+    @RequestMapping(params = "email", method = RequestMethod.GET)
     @ResponseBody
     public User findByEmail(@RequestParam("email") String email){
         setJsonViewClass(JsView.User.class);
@@ -78,7 +77,6 @@ public class UserController extends BaseController{
         return result;
     }
 
-
     @RequestMapping(value="/signup",method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
@@ -87,32 +85,49 @@ public class UserController extends BaseController{
         User result = userService.register(user);
         return result;
     }
-
-
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
-    public String userlogin (@RequestBody User user, Device device){
-
-        logger.info("current usernname"+ user.getUsername());
-        logger.info("current password"+ user.getPassword());
-//        return Boolean.TRUE;
-
-
-        Authentication notFullyAuthenticated = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
+    @ResponseStatus(HttpStatus.OK)
+    public String userLogin (@RequestBody RestAuthenticationRequest restAuthenticationRequest, Device device){
+        logger.info("current usernname"+ restAuthenticationRequest.getUsername());
+        logger.info("current password"+ restAuthenticationRequest.getPassword());
+        Authentication notFullyAuthenticated = new UsernamePasswordAuthenticationToken(restAuthenticationRequest.getUsername(), restAuthenticationRequest.getPassword());
         final Authentication authentication = authenticationManager.authenticate(notFullyAuthenticated);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         try {
-            final UserDetails userDetails = userService.findByName(user.getUsername());
+            final UserDetails userDetails = userService.findByName(restAuthenticationRequest.getUsername());
             final String token = jwtTokenUtil.generateToken(userDetails, device);
             return token;
         } catch (Exception e) {
-            e.printStackTrace();
-            logger.error("login user.");
+            logger.error("Login reject.",e);
             return null;
         }
     }
 
+
+//---------------- IS bad way to do login API for @RequestParam ----------------
+
+
+//    @RequestMapping(value = "/login",method = RequestMethod.POST)
+//    @ResponseBody
+//    public String userLogin (@RequestParam("username") String username,
+//                             @RequestParam("password") String password, Device device){
+//
+//        logger.info("current usernname"+ username);
+//        logger.info("current password"+ password);
+//        Authentication notFullyAuthenticated = new UsernamePasswordAuthenticationToken(username, password);
+//        final Authentication authentication = authenticationManager.authenticate(notFullyAuthenticated);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        try {
+//            final UserDetails userDetails = userService.findByName(username);
+//            final String token = jwtTokenUtil.generateToken(userDetails, device);
+//            return token;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            logger.error("login user.");
+//            return null;
+//        }
+//    }
 
 
 }

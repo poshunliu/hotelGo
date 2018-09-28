@@ -16,9 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping(value = {"/api/hotels","/api/hotel"})
 public class HotelController {
 
-
     public final Logger logger = LoggerFactory.getLogger(getClass());
-
     @Autowired
     public HotelService hotelService;
     @Autowired
@@ -26,9 +24,9 @@ public class HotelController {
     @Autowired
     public ImageService imageService;
 
-    @RequestMapping(value = "name", method = RequestMethod.GET)
+    @RequestMapping(value = "/name",params = "hotelName", method = RequestMethod.GET)
     @ResponseBody
-    public Hotel getHotelByName(String hotelName){
+    public Hotel getHotelByName(@RequestParam("hotelName")String hotelName){
         logger.debug("get Hotel List");
         Hotel result = hotelService.findByName(hotelName);
         return result;
